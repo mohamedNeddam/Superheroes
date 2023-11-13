@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Shapes
@@ -37,7 +39,7 @@ import com.example.superheroes.ui.theme.Shapes
 @Composable
 fun HeroesScreen() {
     Scaffold(topBar = {
-
+        HeroesTopBar()
     }) {
         it -> LazyColumn(contentPadding = it){
             items(HeroesRepository.heroes){
@@ -45,6 +47,19 @@ fun HeroesScreen() {
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HeroesTopBar(modifier: Modifier = Modifier){
+    CenterAlignedTopAppBar(title = {
+        Text(
+            text = stringResource(id = R.string.app_name),
+            style = MaterialTheme.typography.displayLarge
+        )
+    },
+        modifier= modifier
+    )
 }
 
 @Composable
@@ -78,7 +93,8 @@ fun HeroCard(hero: Hero){
                 Image(
                     painter = painterResource(id = hero.imageRes),
                     modifier = Modifier
-                        .clip(Shapes.small).fillMaxSize(),
+                        .clip(Shapes.small)
+                        .fillMaxSize(),
                     contentDescription = null,
                     alignment = Alignment.TopCenter,
                     contentScale = ContentScale.FillWidth
